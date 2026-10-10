@@ -1,0 +1,31 @@
+{
+  "model_version": "IsolationForest-v1.2.0",
+  "algorithm": "IsolationForest",
+  "n_estimators": 100,
+  "contamination": 0.08,
+  "feature_names": [
+    "ultrasonic_distance_cm",
+    "accel_x_mps2",
+    "accel_y_mps2",
+    "accel_z_mps2",
+    "gyro_x_dps",
+    "gyro_y_dps",
+    "gyro_z_dps",
+    "tilt_x_deg",
+    "tilt_y_deg",
+    "tilt_angle_deg",
+    "temperature_C",
+    "humidity_percent",
+    "distance_change_cm",
+    "vibration_rms"
+  ],
+  "feature_count": 14,
+  "decision_threshold": 0.0,
+  "description": "Pre-trained Isolation Forest anomaly detector trained on synthetic geotechnical sensor telemetry.",
+  "feature_mapping_notes": {
+    "ultrasonic_distance_cm": "Mapped from sensor depth or surface clearance (cm). Default 150.0 cm.",
+    "distance_change_cm": "Derived from live displacement_mm / 10.0 (cm).",
+    "vibration_rms": "Derived from live vibration_mm_s (mm/s).",
+    "tilt_angle_deg": "Calculated vector magnitude of tilt_x_deg and tilt_y_deg."
+  }
+}
