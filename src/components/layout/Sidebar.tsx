@@ -11,9 +11,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Shield,
-  Layers,
-  Home
+  Home,
+  Shield
 } from 'lucide-react';
 import { useMine } from '../../context/MineContext';
 
@@ -24,225 +23,190 @@ interface SidebarProps {
   onCloseMobile: () => void;
 }
 
+const navGroups = [
+  {
+    section: 'Operations',
+    items: [
+      { label: 'Dashboard',       path: '/dashboard',  icon: LayoutDashboard },
+      { label: 'Live Monitoring', path: '/monitoring', icon: Activity },
+      { label: 'GIS Map',         path: '/map',        icon: Map },
+    ]
+  },
+  {
+    section: 'Intelligence',
+    items: [
+      { label: 'AI Predictions',  path: '/predictions', icon: Sparkles },
+      { label: 'Alerts',          path: '/alerts',      icon: BellRing, hasBadge: true },
+      { label: 'Analytics',       path: '/analytics',   icon: BarChart3 },
+    ]
+  },
+  {
+    section: 'Management',
+    items: [
+      { label: 'Sensors',         path: '/sensors',  icon: Cpu },
+      { label: 'Settings',        path: '/settings', icon: Settings },
+    ]
+  }
+];
+
+const riskMap: Record<string, string> = {
+  critical: '#8B0000',
+  warning:  '#B8860B',
+  moderate: '#8B6914',
+  normal:   '#1A5C1A',
+};
+
 export const Sidebar: React.FC<SidebarProps> = ({
-  collapsed,
-  onToggleCollapse,
-  mobileOpen,
-  onCloseMobile
+  collapsed, onToggleCollapse, mobileOpen, onCloseMobile
 }) => {
   const { alerts = [], selectedMine } = useMine();
   const activeAlertsCount = alerts?.filter((a) => a.status === 'active').length || 0;
-
-
-  const navItems = [
-    { label: 'Overview', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Live Monitoring', path: '/monitoring', icon: Activity },
-    { label: 'Mine GIS Map', path: '/map', icon: Map },
-    { label: 'AI Predictions', path: '/predictions', icon: Sparkles },
-    { label: 'Alerts & Incidents', path: '/alerts', icon: BellRing, badge: activeAlertsCount > 0 ? activeAlertsCount : undefined },
-    { label: 'Sensor Network', path: '/sensors', icon: Cpu },
-    { label: 'Historical Analytics', path: '/analytics', icon: BarChart3 },
-    { label: 'System Settings', path: '/settings', icon: Settings }
-  ];
+  const riskColor = riskMap[selectedMine?.overallRisk] ?? '#1A5C1A';
 
   return (
     <>
-      {/* Mobile backdrop */}
       {mobileOpen && (
-        <div
-          className="mg-sidebar-backdrop"
-          onClick={onCloseMobile}
-          aria-hidden="true"
-        />
+        <div className="mg-sidebar-backdrop" onClick={onCloseMobile} aria-hidden="true" />
       )}
 
       <aside
         className={`mg-sidebar ${collapsed ? 'mg-sidebar-collapsed' : ''} ${mobileOpen ? 'mobile-open' : ''}`}
+        role="navigation"
+        aria-label="Application navigation"
       >
-        {/* Brand Header */}
-        <div
-          style={{
-            height: 68,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: collapsed ? 'center' : 'space-between',
-            padding: collapsed ? '0' : '0 1.25rem',
-            borderBottom: '1px solid var(--border-subtle)'
-          }}
-        >
-          <NavLink
-            to="/"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.65rem',
-              overflow: 'hidden'
-            }}
-          >
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 'var(--radius-md)',
-                background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(14, 165, 233, 0.1))',
-                border: '1.5px solid var(--cyan-primary)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--cyan-bright)',
-                flexShrink: 0,
-                boxShadow: '0 0 12px var(--cyan-glow)'
-              }}
-            >
-              <Shield size={20} />
-            </div>
-
-            {!collapsed && (
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff' }}>
-                    Mine<span style={{ color: 'var(--cyan-bright)' }}>Guard</span>
-                  </span>
-                  <span
-                    style={{
-                      fontSize: '0.65rem',
-                      background: 'rgba(6, 182, 212, 0.15)',
-                      color: 'var(--cyan-light)',
-                      border: '1px solid var(--border-cyan)',
-                      padding: '1px 5px',
-                      borderRadius: 4,
-                      fontWeight: 700
-                    }}
-                  >
-                    PHASE 1
-                  </span>
-                </div>
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                  Underground Telemetry
-                </span>
+        {/* Brand */}
+        <div style={{
+          padding: collapsed ? '1rem 0' : '1rem 1rem',
+          borderBottom: '1px solid rgba(212,175,55,0.2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: collapsed ? 'center' : 'space-between',
+          minHeight: 72,
+        }}>
+          {!collapsed ? (
+            <NavLink to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', overflow: 'hidden' }}>
+              <div style={{
+                width: 38, height: 38, borderRadius: '50%',
+                background: 'linear-gradient(135deg, #D4AF37, #A8881C)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0, boxShadow: '0 0 12px rgba(212,175,55,0.3)'
+              }}>
+                <Shield size={20} color="#0A2347" />
               </div>
-            )}
-          </NavLink>
+              <div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#FFFBF0', letterSpacing: '-0.01em', fontFamily: 'Literata, serif' }}>
+                  Rakshakavach
+                </div>
+                <div style={{ fontSize: '0.62rem', color: 'rgba(255,251,240,0.5)', lineHeight: 1.2, marginTop: '1px' }}>
+                  Mine Safety System
+                </div>
+              </div>
+            </NavLink>
+          ) : (
+            <NavLink to="/" title="Rakshakavach">
+              <div style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: 'linear-gradient(135deg, #D4AF37, #A8881C)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Shield size={18} color="#0A2347" />
+              </div>
+            </NavLink>
+          )}
 
-          {/* Desktop collapse toggle */}
           {!collapsed && (
-            <button
-              onClick={onToggleCollapse}
-              className="mg-btn mg-btn-secondary"
-              style={{ padding: '0.35rem', borderRadius: 'var(--radius-sm)' }}
-              title="Collapse sidebar"
-            >
-              <ChevronLeft size={16} />
+            <button onClick={onToggleCollapse} className="mg-btn mg-btn-secondary mg-btn-sm"
+              style={{ padding: '0.3rem', background: 'transparent', border: '1px solid rgba(255,251,240,0.15)', color: 'rgba(255,251,240,0.6)' }}
+              title="Collapse sidebar" aria-label="Collapse sidebar">
+              <ChevronLeft size={14} />
             </button>
           )}
         </div>
 
-        {/* Collapsed expand toggle button */}
+        {/* Collapsed expand button */}
         {collapsed && (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem 0' }}>
-            <button
-              onClick={onToggleCollapse}
-              className="mg-btn mg-btn-secondary"
-              style={{ padding: '0.35rem', borderRadius: 'var(--radius-sm)' }}
-              title="Expand sidebar"
-            >
-              <ChevronRight size={16} />
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '0.4rem 0', borderBottom: '1px solid rgba(212,175,55,0.1)' }}>
+            <button onClick={onToggleCollapse} className="mg-btn mg-btn-sm"
+              style={{ padding: '0.3rem', background: 'transparent', border: '1px solid rgba(255,251,240,0.15)', color: 'rgba(255,251,240,0.6)' }}
+              title="Expand sidebar" aria-label="Expand sidebar">
+              <ChevronRight size={14} />
             </button>
           </div>
         )}
 
-        {/* Selected Mine Status Ribbon */}
-        {!collapsed && (
-          <div
-            style={{
-              padding: '0.75rem 1rem',
-              margin: '0.75rem 0.75rem 0.25rem 0.75rem',
-              background: 'rgba(15, 24, 47, 0.8)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-subtle)',
-              fontSize: '0.75rem'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Layers size={12} color="var(--cyan-bright)" /> {selectedMine?.coalfield}
-              </span>
-              <span className={`mg-badge mg-badge-sm mg-badge-${selectedMine?.overallRisk}`}>
-                {selectedMine?.overallRisk}
-              </span>
+        {/* Mine status ribbon */}
+        {!collapsed && selectedMine && (
+          <div style={{
+            margin: '0.65rem 0.75rem 0.25rem',
+            padding: '0.6rem 0.85rem',
+            background: 'rgba(255,251,240,0.06)',
+            borderRadius: 4,
+            borderLeft: `3px solid ${riskColor}`,
+          }}>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#FFFBF0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {selectedMine.name}
             </div>
-            <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>
-              Seam: <span style={{ color: 'var(--text-main)' }}>{selectedMine?.currentSeam}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.2rem' }}>
+              <span style={{ fontSize: '0.65rem', color: 'rgba(255,251,240,0.55)' }}>{selectedMine.coalfield}</span>
+              <span style={{ fontSize: '0.62rem', fontWeight: 700, color: riskColor, textTransform: 'uppercase' }}>
+                {selectedMine.overallRisk}
+              </span>
             </div>
           </div>
         )}
 
-        {/* Navigation list */}
-        <nav style={{ flex: 1, padding: '0.75rem 0', overflowY: 'auto' }}>
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                onClick={onCloseMobile}
-                className={({ isActive }) => `mg-nav-item ${isActive ? 'active' : ''}`}
-                title={collapsed ? item.label : undefined}
-                style={{
-                  justifyContent: collapsed ? 'center' : 'flex-start',
-                  padding: collapsed ? '0.75rem 0' : '0.7rem 1rem'
-                }}
-              >
-                <Icon size={18} style={{ flexShrink: 0 }} />
-                {!collapsed && (
-                  <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {item.label}
-                  </span>
-                )}
-                {!collapsed && item.badge !== undefined && (
-                  <span
-                    style={{
-                      background: 'var(--risk-critical)',
-                      color: '#ffffff',
-                      fontSize: '0.7rem',
-                      fontWeight: 700,
-                      padding: '1px 6px',
-                      borderRadius: 'var(--radius-pill)',
-                      marginLeft: 'auto'
-                    }}
+        {/* Nav Groups */}
+        <nav style={{ flex: 1, padding: '0.35rem 0', overflowY: 'auto' }}>
+          {navGroups.map((group) => (
+            <div key={group.section}>
+              {!collapsed && (
+                <div className="mg-nav-section">{group.section}</div>
+              )}
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const badge = (item as any).hasBadge && activeAlertsCount > 0 ? activeAlertsCount : undefined;
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    onClick={onCloseMobile}
+                    className={({ isActive }) => `mg-nav-item ${isActive ? 'active' : ''}`}
+                    title={collapsed ? item.label : undefined}
+                    style={{ justifyContent: collapsed ? 'center' : undefined, padding: collapsed ? '0.65rem 0' : undefined }}
+                    aria-label={item.label}
                   >
-                    {item.badge}
-                  </span>
-                )}
-              </NavLink>
-            );
-          })}
+                    <Icon size={17} style={{ flexShrink: 0 }} />
+                    {!collapsed && (
+                      <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {item.label}
+                      </span>
+                    )}
+                    {!collapsed && badge !== undefined && (
+                      <span style={{
+                        background: '#8B0000', color: '#fff', fontSize: '0.65rem', fontWeight: 800,
+                        minWidth: 18, height: 18, borderRadius: 9999,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px'
+                      }} aria-label={`${badge} active alerts`}>
+                        {badge}
+                      </span>
+                    )}
+                  </NavLink>
+                );
+              })}
+            </div>
+          ))}
         </nav>
 
-        {/* Sidebar Footer Link to Landing */}
-        <div
-          style={{
-            padding: '0.75rem',
-            borderTop: '1px solid var(--border-subtle)',
-            background: 'rgba(6, 10, 20, 0.6)'
-          }}
-        >
+        {/* Footer */}
+        <div style={{ padding: '0.65rem', borderTop: '1px solid rgba(212,175,55,0.15)', background: 'rgba(0,0,0,0.15)' }}>
           <NavLink
             to="/"
-            className="mg-btn mg-btn-secondary"
-            style={{
-              width: '100%',
-              fontSize: '0.8rem',
-              padding: '0.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: collapsed ? 'center' : 'flex-start',
-              gap: '0.5rem'
-            }}
-            title="Public Landing Page"
+            className="mg-nav-item"
+            style={{ justifyContent: collapsed ? 'center' : undefined, margin: 0, padding: collapsed ? '0.5rem 0' : '0.5rem 0.5rem' }}
+            title="Home"
           >
-            <Home size={16} />
-            {!collapsed && <span>Public Landing Page</span>}
+            <Home size={15} style={{ flexShrink: 0 }} />
+            {!collapsed && <span style={{ fontSize: '0.8rem' }}>Home</span>}
           </NavLink>
         </div>
       </aside>

@@ -25,6 +25,7 @@ import {
   Map as MapIcon
 } from 'lucide-react';
 import { Footer } from '../components/layout/Footer';
+import { Mine3DHeroCanvas } from '../components/hero/Mine3DHeroCanvas';
 
 export const LandingPage: React.FC = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -36,39 +37,43 @@ export const LandingPage: React.FC = () => {
       {/* ------------------------------------------------------------------ */}
       <nav
         style={{
-          position: 'sticky',
+          position: 'fixed',
           top: 0,
+          left: 0,
+          right: 0,
           zIndex: 100,
-          background: 'rgba(6, 10, 20, 0.85)',
+          background: 'rgba(6, 10, 20, 0.45)',
           backdropFilter: 'blur(16px)',
-          borderBottom: '1px solid var(--border-subtle)'
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          transition: 'background var(--transition-normal)'
         }}
       >
         <div className="mg-container">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
             {/* Logo */}
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
               <div
                 style={{
-                  width: 38,
-                  height: 38,
+                  width: 40,
+                  height: 40,
                   borderRadius: 'var(--radius-md)',
-                  background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(14, 165, 233, 0.15))',
-                  border: '1.5px solid var(--cyan-primary)',
+                  background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(6, 182, 212, 0.15))',
+                  border: '1.5px solid rgba(245, 158, 11, 0.75)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--cyan-bright)',
-                  boxShadow: '0 0 16px var(--cyan-glow)'
+                  color: '#fbbf24',
+                  boxShadow: '0 0 16px rgba(245, 158, 11, 0.3)'
                 }}
               >
                 <Shield size={22} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '1.28rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff', lineHeight: 1.1 }}>
-                  Mine<span style={{ color: 'var(--cyan-bright)' }}>Guard</span>
+                  Raksha<span style={{ color: '#f59e0b' }}>kavach</span>
                 </span>
-                <span style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.7)', fontWeight: 500 }}>
                   Ground Subsidence Telemetry & AI
                 </span>
               </div>
@@ -82,11 +87,11 @@ export const LandingPage: React.FC = () => {
                 gap: '1.75rem',
                 fontSize: '0.88rem',
                 fontWeight: 500,
-                color: 'var(--text-secondary)'
+                color: 'rgba(255, 255, 255, 0.75)'
               }}
               className="desktop-nav"
             >
-              <a href="#hero" style={{ color: 'var(--text-main)' }}>Home</a>
+              <a href="#hero" style={{ color: '#ffffff', fontWeight: 600 }}>Home</a>
               <a href="#how-it-works" style={{ transition: 'color var(--transition-fast)' }}>How It Works</a>
               <a href="#features" style={{ transition: 'color var(--transition-fast)' }}>Features</a>
               <a href="#tech-stack" style={{ transition: 'color var(--transition-fast)' }}>Technology</a>
@@ -94,7 +99,7 @@ export const LandingPage: React.FC = () => {
               <Link
                 to="/dashboard"
                 style={{
-                  color: 'var(--cyan-bright)',
+                  color: '#fbbf24',
                   fontWeight: 600,
                   display: 'flex',
                   alignItems: 'center',
@@ -107,10 +112,20 @@ export const LandingPage: React.FC = () => {
 
             {/* Action Buttons */}
             <div style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }} className="desktop-actions">
-              <Link to="/login" className="mg-btn mg-btn-secondary mg-btn-sm">
+              <Link to="/login" className="mg-btn mg-btn-secondary mg-btn-sm" style={{ backdropFilter: 'blur(8px)', background: 'rgba(255, 255, 255, 0.06)' }}>
                 Sign In
               </Link>
-              <Link to="/register" className="mg-btn mg-btn-primary mg-btn-sm">
+              <Link
+                to="/register"
+                className="mg-btn mg-btn-sm"
+                style={{
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  color: '#060a14',
+                  fontWeight: 700,
+                  border: 'none',
+                  boxShadow: '0 2px 10px rgba(245, 158, 11, 0.35)'
+                }}
+              >
                 Get Started
               </Link>
             </div>
@@ -131,7 +146,8 @@ export const LandingPage: React.FC = () => {
         {mobileNavOpen && (
           <div
             style={{
-              background: 'var(--bg-secondary)',
+              background: 'rgba(10, 16, 31, 0.96)',
+              backdropFilter: 'blur(20px)',
               borderBottom: '1px solid var(--border-medium)',
               padding: '1.5rem',
               display: 'flex',
@@ -142,7 +158,7 @@ export const LandingPage: React.FC = () => {
             <a
               href="#hero"
               onClick={() => setMobileNavOpen(false)}
-              style={{ padding: '0.5rem 0', fontSize: '1rem', color: 'var(--text-main)' }}
+              style={{ padding: '0.5rem 0', fontSize: '1rem', color: '#ffffff', fontWeight: 600 }}
             >
               Home
             </a>
@@ -177,7 +193,7 @@ export const LandingPage: React.FC = () => {
             <Link
               to="/dashboard"
               onClick={() => setMobileNavOpen(false)}
-              style={{ padding: '0.5rem 0', fontSize: '1rem', color: 'var(--cyan-bright)', fontWeight: 600 }}
+              style={{ padding: '0.5rem 0', fontSize: '1rem', color: '#fbbf24', fontWeight: 600 }}
             >
               Safety Dashboard &rarr;
             </Link>
@@ -185,7 +201,16 @@ export const LandingPage: React.FC = () => {
               <Link to="/login" className="mg-btn mg-btn-secondary" style={{ flex: 1 }}>
                 Sign In
               </Link>
-              <Link to="/register" className="mg-btn mg-btn-primary" style={{ flex: 1 }}>
+              <Link
+                to="/register"
+                className="mg-btn"
+                style={{
+                  flex: 1,
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  color: '#060a14',
+                  fontWeight: 700
+                }}
+              >
                 Get Started
               </Link>
             </div>
@@ -194,10 +219,47 @@ export const LandingPage: React.FC = () => {
       </nav>
 
       <style>{`
+        section {
+          scroll-margin-top: 72px;
+        }
         @media (min-width: 900px) {
           .desktop-nav { display: flex !important; }
           .desktop-actions { display: flex !important; }
           .mobile-menu-btn { display: none !important; }
+        }
+        .hero-btn-primary {
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hero-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 30px rgba(245, 158, 11, 0.6), 0 0 40px rgba(245, 158, 11, 0.3) !important;
+          filter: brightness(1.08);
+        }
+        .hero-btn-secondary {
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hero-btn-secondary:hover {
+          transform: translateY(-2px);
+          background: rgba(22, 34, 60, 0.85) !important;
+          border-color: rgba(251, 191, 36, 0.8) !important;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.25) !important;
+        }
+        @media (max-width: 640px) {
+          .hero-cta-group {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .hero-cta-group a {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+          .hero-stat-divider {
+            display: none !important;
+          }
+          .hero-stats-bar {
+            width: 100% !important;
+            justify-content: space-around !important;
+          }
         }
       `}</style>
 
@@ -208,240 +270,215 @@ export const LandingPage: React.FC = () => {
         id="hero"
         style={{
           position: 'relative',
-          padding: '5.5rem 0 4.5rem 0',
-          background: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.15), transparent 70%)',
-          borderBottom: '1px solid var(--border-subtle)'
+          minHeight: '100svh',
+          width: '100%',
+          backgroundColor: '#060a14',
+          backgroundImage: "url('/images/mine-hero.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: '7.5rem',
+          paddingBottom: '5rem',
+          overflow: 'hidden',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
         }}
       >
-        <div className="mg-container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '3.5rem',
-              alignItems: 'center'
-            }}
-          >
-            {/* Left Content Column */}
-            <div>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: 'var(--radius-pill)',
-                  background: 'rgba(6, 182, 212, 0.1)',
-                  border: '1px solid var(--border-cyan)',
-                  color: 'var(--cyan-bright)',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.04em',
-                  marginBottom: '1.5rem'
-                }}
-              >
-                <Radio size={14} className="pulse-radar" />
-                DGMS-Compliant Underground Mining Safety AI
-              </div>
+        {/* Cinematic Hybrid 3D WebGL Mine Environment */}
+        <Mine3DHeroCanvas />
 
-              <h1
-                style={{
-                  fontSize: 'clamp(2.3rem, 5vw, 3.8rem)',
-                  fontWeight: 800,
-                  lineHeight: 1.12,
-                  letterSpacing: '-0.03em',
-                  marginBottom: '1.25rem',
-                  color: '#ffffff'
-                }}
-              >
-                Detect Ground Movement.{' '}
-                <span className="text-gradient-cyan">Predict Risk.</span>{' '}
-                Protect Lives.
-              </h1>
+        {/* Layered dark gradient overlay — stronger on the left and toward the bottom */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            zIndex: 1,
+            background: [
+              'linear-gradient(to right, rgba(6, 10, 20, 0.95) 0%, rgba(6, 10, 20, 0.88) 36%, rgba(6, 10, 20, 0.55) 62%, rgba(6, 10, 20, 0.2) 85%, rgba(6, 10, 20, 0.08) 100%)',
+              'linear-gradient(to top, #060a14 0%, rgba(6, 10, 20, 0.88) 14%, rgba(6, 10, 20, 0.3) 38%, transparent 68%)',
+              'linear-gradient(to bottom, rgba(6, 10, 20, 0.75) 0%, rgba(6, 10, 20, 0.25) 18%, transparent 35%)'
+            ].join(', ')
+          }}
+        />
 
-              <p
-                style={{
-                  fontSize: '1.1rem',
-                  lineHeight: 1.65,
-                  color: 'var(--text-secondary)',
-                  marginBottom: '2rem',
-                  maxWidth: 580
-                }}
-              >
-                An AI-powered mine subsidence monitoring and early warning platform combining intelligent sensor networks, real-time telemetry, predictive analytics, and geospatial risk visualization to support safer underground coal mining in India.
-              </p>
-
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
-                <Link to="/dashboard" className="mg-btn mg-btn-primary mg-btn-lg">
-                  Open Safety Dashboard <ArrowRight size={18} />
-                </Link>
-                <a href="#how-it-works" className="mg-btn mg-btn-secondary mg-btn-lg">
-                  Explore How It Works
-                </a>
-              </div>
-
-              {/* Trust & Field Validation Badges */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '1rem',
-                  paddingTop: '1.5rem',
-                  borderTop: '1px solid var(--border-subtle)'
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Target Coalfields</div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)', marginTop: '2px' }}>Jharia &bull; Raniganj</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Sensor Accuracy</div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--cyan-bright)', marginTop: '2px' }}>&plusmn;0.05 mm Strata</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Warning Horizon</div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--teal-accent)', marginTop: '2px' }}>72 hrs Predictive</div>
-                </div>
-              </div>
+        {/* Hero Content */}
+        <div className="mg-container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+          <div style={{ maxWidth: 780 }}>
+            {/* DGMS Pill Tag */}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.55rem',
+                padding: '0.4rem 1rem',
+                borderRadius: 'var(--radius-pill)',
+                background: 'rgba(245, 158, 11, 0.12)',
+                border: '1px solid rgba(245, 158, 11, 0.45)',
+                color: '#fbbf24',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                marginBottom: '1.75rem',
+                boxShadow: '0 0 20px rgba(245, 158, 11, 0.15)',
+                backdropFilter: 'blur(8px)'
+              }}
+            >
+              <Radio size={14} className="pulse-radar" style={{ color: '#fbbf24' }} />
+              DGMS-Compliant Underground Mining Safety AI
             </div>
 
-            {/* Right Hero Artwork: Interactive Subterranean Strata Graphic & Telemetry Card */}
-            <div>
-              <div
+            {/* Headline */}
+            <h1
+              style={{
+                fontSize: 'clamp(2.6rem, 5.8vw, 4.4rem)',
+                fontWeight: 800,
+                lineHeight: 1.12,
+                letterSpacing: '-0.03em',
+                marginBottom: '1.5rem'
+              }}
+            >
+              <span
                 style={{
-                  position: 'relative',
-                  background: 'radial-gradient(circle at 50% 30%, #152342 0%, #0b1224 80%)',
-                  borderRadius: 'var(--radius-xl)',
-                  border: '1px solid var(--border-medium)',
-                  padding: '1.75rem',
-                  boxShadow: 'var(--shadow-lg), 0 0 40px rgba(6, 182, 212, 0.15)'
+                  display: 'block',
+                  color: '#f8fafc',
+                  textShadow: '0 2px 20px rgba(0, 0, 0, 0.6)'
                 }}
               >
-                {/* Geological Scene SVG: Surface, Overburden Strata, Coal Seam, Borehole Sensors & Telemetry */}
-                <div style={{ width: '100%', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '1.25rem' }}>
-                  <svg viewBox="0 0 540 260" width="100%" height="auto" style={{ display: 'block', background: '#070d1b' }}>
-                    <defs>
-                      <linearGradient id="strata1" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#1e293b" />
-                        <stop offset="100%" stopColor="#0f172a" />
-                      </linearGradient>
-                      <linearGradient id="coalSeam" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#020617" />
-                        <stop offset="100%" stopColor="#0f172a" />
-                      </linearGradient>
-                      <linearGradient id="troughGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.4" />
-                        <stop offset="100%" stopColor="#ef4444" stopOpacity="0.0" />
-                      </linearGradient>
-                    </defs>
+                See the Risk.
+              </span>
+              <span
+                style={{
+                  display: 'block',
+                  background: 'linear-gradient(135deg, #fde68a 0%, #f59e0b 45%, #d97706 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: '#fbbf24',
+                  textShadow: '0 0 35px rgba(245, 158, 11, 0.3)',
+                  marginTop: '0.2rem'
+                }}
+              >
+                Before the Ground Moves.
+              </span>
+            </h1>
 
-                    {/* Topography Surface line with developing subsidence trough */}
-                    <path
-                      d="M 10,65 Q 150,65 240,78 Q 280,84 320,78 Q 400,65 530,65 L 530,250 L 10,250 Z"
-                      fill="url(#strata1)"
-                    />
+            {/* Supporting Text */}
+            <p
+              style={{
+                fontSize: 'clamp(1.05rem, 1.8vw, 1.25rem)',
+                lineHeight: 1.65,
+                color: 'rgba(241, 245, 249, 0.92)',
+                marginBottom: '2.5rem',
+                maxWidth: 680,
+                fontWeight: 400,
+                textShadow: '0 2px 14px rgba(0, 0, 0, 0.8)'
+              }}
+            >
+              AI-powered subsidence monitoring, real-time sensor intelligence, and predictive early warnings designed to help protect underground mine workers.
+            </p>
 
-                    {/* Ground Surface contour */}
-                    <path
-                      d="M 10,65 Q 150,65 240,78 Q 280,84 320,78 Q 400,65 530,65"
-                      stroke="#38bdf8"
-                      strokeWidth="2.5"
-                      fill="none"
-                    />
+            {/* Action Buttons */}
+            <div
+              className="hero-cta-group"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '1.25rem',
+                marginBottom: '3rem'
+              }}
+            >
+              <Link
+                to="/monitoring"
+                className="hero-btn-primary"
+                style={{
+                  background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
+                  color: '#090d16',
+                  fontWeight: 700,
+                  fontSize: '1.02rem',
+                  padding: '0.95rem 2rem',
+                  borderRadius: 'var(--radius-md, 10px)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.65rem',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 24px rgba(245, 158, 11, 0.45), 0 0 32px rgba(245, 158, 11, 0.25)',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <Activity size={19} />
+                Explore Live Monitoring
+                <ArrowRight size={17} />
+              </Link>
 
-                    {/* Subsidence Trough Strain Zone */}
-                    <path
-                      d="M 210,75 Q 280,95 350,75 L 350,110 Q 280,125 210,110 Z"
-                      fill="url(#troughGrad)"
-                      stroke="#ef4444"
-                      strokeDasharray="4 3"
-                    />
+              <Link
+                to="/predictions"
+                className="hero-btn-secondary"
+                style={{
+                  background: 'rgba(10, 16, 31, 0.75)',
+                  backdropFilter: 'blur(12px)',
+                  color: '#ffffff',
+                  fontWeight: 600,
+                  fontSize: '1.02rem',
+                  padding: '0.95rem 2rem',
+                  borderRadius: 'var(--radius-md, 10px)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.65rem',
+                  textDecoration: 'none',
+                  border: '1.5px solid rgba(245, 158, 11, 0.55)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+                  cursor: 'pointer'
+                }}
+              >
+                <Sparkles size={19} style={{ color: '#fbbf24' }} />
+                View Risk Intelligence
+              </Link>
+            </div>
 
-                    {/* Surface Infrastructure (PWD Road & Pylons) */}
-                    <rect x="50" y="58" width="60" height="6" rx="2" fill="#64748b" />
-                    <line x1="80" y1="58" x2="80" y2="35" stroke="#94a3b8" strokeWidth="2" />
-                    <line x1="72" y1="42" x2="88" y2="42" stroke="#94a3b8" strokeWidth="1.5" />
-
-                    {/* Subsurface Coal Seam (Seam XI/XII) */}
-                    <path
-                      d="M 10,195 L 200,195 L 210,225 L 10,225 Z"
-                      fill="url(#coalSeam)"
-                      stroke="#334155"
-                    />
-                    <path
-                      d="M 360,195 L 530,195 L 530,225 L 360,225 Z"
-                      fill="url(#coalSeam)"
-                      stroke="#334155"
-                    />
-
-                    {/* Void / Goaf Caving Zone */}
-                    <rect x="210" y="195" width="150" height="30" fill="#090d16" stroke="#f97316" strokeDasharray="3 3" />
-                    <text x="285" y="214" fill="#f97316" fontSize="10" fontWeight="bold" textAnchor="middle">
-                      DEPILLARING GOAF VOID
-                    </text>
-
-                    {/* Borehole Extensometer 101 */}
-                    <line x1="280" y1="84" x2="280" y2="195" stroke="#00e5ff" strokeWidth="2" strokeDasharray="4 2" />
-                    <circle cx="280" cy="84" r="5" fill="#ef4444" />
-                    <circle cx="280" cy="140" r="3" fill="#00e5ff" />
-                    <circle cx="280" cy="195" r="4" fill="#00e5ff" />
-                    <text x="292" y="90" fill="#ef4444" fontSize="9" fontWeight="bold">MPBX-101 (14.8mm)</text>
-
-                    {/* Wireless Gateway tower at surface */}
-                    <line x1="460" y1="65" x2="460" y2="30" stroke="#06b6d4" strokeWidth="2" />
-                    <circle cx="460" cy="28" r="4" fill="#06b6d4" />
-                    <path d="M 450,22 Q 460,16 470,22" stroke="#06b6d4" strokeWidth="1.5" fill="none" opacity="0.8" />
-                    <path d="M 445,18 Q 460,10 475,18" stroke="#06b6d4" strokeWidth="1.5" fill="none" opacity="0.6" />
-                    <text x="460" y="15" fill="#38bdf8" fontSize="8" fontWeight="bold" textAnchor="middle">LoRaWAN MESH</text>
-
-                    {/* Strata Labels */}
-                    <text x="25" y="140" fill="#64748b" fontSize="9">Overburden Sandstone (145m)</text>
-                    <text x="25" y="214" fill="#94a3b8" fontSize="9" fontWeight="bold">Coal Seam XI (Bord &amp; Pillar)</text>
-                  </svg>
+            {/* Geotechnical Badges & Field Validation */}
+            <div
+              className="hero-stats-bar"
+              style={{
+                display: 'inline-flex',
+                flexWrap: 'wrap',
+                gap: '1.75rem',
+                alignItems: 'center',
+                padding: '1.1rem 1.65rem',
+                borderRadius: 'var(--radius-lg, 16px)',
+                background: 'rgba(6, 10, 20, 0.72)',
+                backdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+                maxWidth: 'fit-content'
+              }}
+            >
+              <div>
+                <div style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Target Coalfields
                 </div>
-
-                {/* Mini Live Telemetry Preview Card */}
-                <div
-                  style={{
-                    background: 'rgba(10, 16, 31, 0.85)',
-                    borderRadius: 'var(--radius-lg)',
-                    border: '1px solid var(--border-cyan)',
-                    padding: '1.25rem'
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--risk-critical)', animation: 'pulse-radar 1.5s infinite' }} />
-                      <strong style={{ fontSize: '0.88rem', color: 'var(--text-main)' }}>
-                        Live Telemetry Node: MPBX-101
-                      </strong>
-                    </div>
-                    <span className="mg-badge mg-badge-critical mg-badge-sm">
-                      Critical Strain
-                    </span>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '0.85rem' }}>
-                    <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Differential Disp.</div>
-                      <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--risk-critical)' }}>14.8 mm</div>
-                    </div>
-                    <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Subsidence Rate</div>
-                      <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--risk-warning)' }}>3.4 mm/d</div>
-                    </div>
-                    <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Strata Tilt</div>
-                      <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--cyan-bright)' }}>4.6 mm/m</div>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
-                    <span>Sector: Panel 4B Depillaring Face (Jharia)</span>
-                    <span style={{ color: 'var(--cyan-bright)' }}>Illustrative Geotechnical Telemetry</span>
-                  </div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#f8fafc', marginTop: '2px' }}>
+                  Jharia &bull; Raniganj
+                </div>
+              </div>
+              <div className="hero-stat-divider" style={{ width: '1px', height: '28px', background: 'rgba(255, 255, 255, 0.12)' }} />
+              <div>
+                <div style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Sensor Precision
+                </div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fbbf24', marginTop: '2px' }}>
+                  &plusmn;0.05 mm Strata
+                </div>
+              </div>
+              <div className="hero-stat-divider" style={{ width: '1px', height: '28px', background: 'rgba(255, 255, 255, 0.12)' }} />
+              <div>
+                <div style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Warning Horizon
+                </div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#38bdf8', marginTop: '2px' }}>
+                  72 hrs Predictive AI
                 </div>
               </div>
             </div>
@@ -454,7 +491,7 @@ export const LandingPage: React.FC = () => {
       {/* ------------------------------------------------------------------ */}
       <section
         style={{
-          padding: '5rem 0',
+          padding: '5.5rem 0',
           background: 'var(--bg-primary)',
           borderBottom: '1px solid var(--border-subtle)'
         }}
@@ -476,7 +513,8 @@ export const LandingPage: React.FC = () => {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '1.5rem'
+              gap: '1.5rem',
+              marginBottom: '3.5rem'
             }}
           >
             {/* Card 1 */}
@@ -516,6 +554,155 @@ export const LandingPage: React.FC = () => {
               <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                 In coal belts like Jharia and Raniganj, densely populated villages and towns sit directly above old and active workings. Subsidence causes structural fissures in residential dwellings, crop land loss, and forest degradation.
               </p>
+            </div>
+          </div>
+
+          {/* Subterranean Strata Cross-Section & Telemetry Node */}
+          <div
+            style={{
+              position: 'relative',
+              background: 'radial-gradient(circle at 50% 30%, #152342 0%, #0b1224 80%)',
+              borderRadius: 'var(--radius-xl)',
+              border: '1px solid var(--border-medium)',
+              padding: '2rem',
+              boxShadow: 'var(--shadow-lg), 0 0 40px rgba(6, 182, 212, 0.12)'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div>
+                <span className="mg-badge mg-badge-cyan" style={{ marginBottom: '0.35rem' }}>Subterranean Geological Inspection</span>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#ffffff' }}>
+                  Real-Time Strata Cross-Section &amp; Multi-Point Borehole Telemetry
+                </h3>
+              </div>
+              <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                Bord &amp; Pillar Extraction Overburden Model
+              </span>
+            </div>
+
+            {/* Geological Scene SVG: Surface, Overburden Strata, Coal Seam, Borehole Sensors & Telemetry */}
+            <div style={{ width: '100%', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '1.5rem' }}>
+              <svg viewBox="0 0 540 260" width="100%" height="auto" style={{ display: 'block', background: '#070d1b' }}>
+                <defs>
+                  <linearGradient id="strata1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#1e293b" />
+                    <stop offset="100%" stopColor="#0f172a" />
+                  </linearGradient>
+                  <linearGradient id="coalSeam" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#020617" />
+                    <stop offset="100%" stopColor="#0f172a" />
+                  </linearGradient>
+                  <linearGradient id="troughGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ef4444" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#ef4444" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                {/* Topography Surface line with developing subsidence trough */}
+                <path
+                  d="M 10,65 Q 150,65 240,78 Q 280,84 320,78 Q 400,65 530,65 L 530,250 L 10,250 Z"
+                  fill="url(#strata1)"
+                />
+
+                {/* Ground Surface contour */}
+                <path
+                  d="M 10,65 Q 150,65 240,78 Q 280,84 320,78 Q 400,65 530,65"
+                  stroke="#38bdf8"
+                  strokeWidth="2.5"
+                  fill="none"
+                />
+
+                {/* Subsidence Trough Strain Zone */}
+                <path
+                  d="M 210,75 Q 280,95 350,75 L 350,110 Q 280,125 210,110 Z"
+                  fill="url(#troughGrad)"
+                  stroke="#ef4444"
+                  strokeDasharray="4 3"
+                />
+
+                {/* Surface Infrastructure (PWD Road & Pylons) */}
+                <rect x="50" y="58" width="60" height="6" rx="2" fill="#64748b" />
+                <line x1="80" y1="58" x2="80" y2="35" stroke="#94a3b8" strokeWidth="2" />
+                <line x1="72" y1="42" x2="88" y2="42" stroke="#94a3b8" strokeWidth="1.5" />
+
+                {/* Subsurface Coal Seam (Seam XI/XII) */}
+                <path
+                  d="M 10,195 L 200,195 L 210,225 L 10,225 Z"
+                  fill="url(#coalSeam)"
+                  stroke="#334155"
+                />
+                <path
+                  d="M 360,195 L 530,195 L 530,225 L 360,225 Z"
+                  fill="url(#coalSeam)"
+                  stroke="#334155"
+                />
+
+                {/* Void / Goaf Caving Zone */}
+                <rect x="210" y="195" width="150" height="30" fill="#090d16" stroke="#f97316" strokeDasharray="3 3" />
+                <text x="285" y="214" fill="#f97316" fontSize="10" fontWeight="bold" textAnchor="middle">
+                  DEPILLARING GOAF VOID
+                </text>
+
+                {/* Borehole Extensometer 101 */}
+                <line x1="280" y1="84" x2="280" y2="195" stroke="#00e5ff" strokeWidth="2" strokeDasharray="4 2" />
+                <circle cx="280" cy="84" r="5" fill="#ef4444" />
+                <circle cx="280" cy="140" r="3" fill="#00e5ff" />
+                <circle cx="280" cy="195" r="4" fill="#00e5ff" />
+                <text x="292" y="90" fill="#ef4444" fontSize="9" fontWeight="bold">MPBX-101 (14.8mm)</text>
+
+                {/* Wireless Gateway tower at surface */}
+                <line x1="460" y1="65" x2="460" y2="30" stroke="#06b6d4" strokeWidth="2" />
+                <circle cx="460" cy="28" r="4" fill="#06b6d4" />
+                <path d="M 450,22 Q 460,16 470,22" stroke="#06b6d4" strokeWidth="1.5" fill="none" opacity="0.8" />
+                <path d="M 445,18 Q 460,10 475,18" stroke="#06b6d4" strokeWidth="1.5" fill="none" opacity="0.6" />
+                <text x="460" y="15" fill="#38bdf8" fontSize="8" fontWeight="bold" textAnchor="middle">LoRaWAN MESH</text>
+
+                {/* Strata Labels */}
+                <text x="25" y="140" fill="#64748b" fontSize="9">Overburden Sandstone (145m)</text>
+                <text x="25" y="214" fill="#94a3b8" fontSize="9" fontWeight="bold">Coal Seam XI (Bord &amp; Pillar)</text>
+              </svg>
+            </div>
+
+            {/* Mini Live Telemetry Preview Card */}
+            <div
+              style={{
+                background: 'rgba(10, 16, 31, 0.85)',
+                borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--border-cyan)',
+                padding: '1.25rem'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--risk-critical)', animation: 'pulse-radar 1.5s infinite' }} />
+                  <strong style={{ fontSize: '0.88rem', color: 'var(--text-main)' }}>
+                    Live Telemetry Node: MPBX-101
+                  </strong>
+                </div>
+                <span className="mg-badge mg-badge-critical mg-badge-sm">
+                  Critical Strain
+                </span>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '0.85rem' }}>
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Differential Disp.</div>
+                  <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--risk-critical)' }}>14.8 mm</div>
+                </div>
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Subsidence Rate</div>
+                  <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--risk-warning)' }}>3.4 mm/d</div>
+                </div>
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Strata Tilt</div>
+                  <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--cyan-bright)' }}>4.6 mm/m</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                <span>Sector: Panel 4B Depillaring Face (Jharia)</span>
+                <span style={{ color: 'var(--cyan-bright)' }}>Illustrative Geotechnical Telemetry</span>
+              </div>
             </div>
           </div>
         </div>

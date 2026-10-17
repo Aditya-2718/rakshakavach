@@ -9,6 +9,9 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div className="mg-shell">
+      {/* Accessibility: skip to main content */}
+      <a href="#main-content" className="skip-to-content">Skip to main content</a>
+
       <Sidebar
         collapsed={collapsed}
         onToggleCollapse={() => setCollapsed(!collapsed)}
@@ -19,7 +22,7 @@ export const AppLayout: React.FC = () => {
       <div className="mg-main-content">
         <Header onToggleMobileSidebar={() => setMobileOpen(!mobileOpen)} />
 
-        <main className="mg-page-body">
+        <main id="main-content" className="mg-page-body">
           <Outlet />
         </main>
       </div>
